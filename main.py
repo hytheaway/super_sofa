@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import sofa
 import os
 
-input_sofa_files = input('List all .sofa files to be used here (separated by comma): ')
+input_sofa_files = input('List paths to all .sofa files to be used here (separated by comma): ')
 
 # Clean up input
 sofa_files_list = input_sofa_files.split(",")
@@ -40,7 +40,7 @@ for i in range(0, len(ylim)):
 print('measurement: ', measurement)
 print('emitter: ', emitter)
 
-plt.figure(figsize=(15, 5), num=str('Left-Channel Comparison Head-Related Transfer Function'))
+plt.figure(figsize=(15, 5), num=str('Left-Channel Head-Related Transfer Function Comparison'))
 
 for i in sofa_files_list:
     legend.append(os.path.basename(i))
@@ -80,7 +80,7 @@ ax.set_xlim([int(xlim_start), int(xlim_end)]) # Bound the x-axis
 ax.set_ylim([int(ylim_start), int(ylim_end)]) # Bound the y-axis
 plt.grid() # Horizontal grid line
 plt.grid(which='minor', color="0.9") # Vertical grid lines
-plt.title('Left-Channel Comparison HRTF at M={0} for emitter {1}'.format(measurement, emitter))
+plt.title('Left-Channel HRTF Comparison at M={0} for emitter {1}'.format(measurement, emitter))
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Magnitude (dB)')
 plt.legend(legend)
