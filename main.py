@@ -55,11 +55,11 @@ for i in sofa_files_list:
     
     # Compute FFT of HRTF
     HRTF = np.fft.fft(SOFA_HRTF.Data.IR.get_values(indices={"M":measurement, "R":receiver, "E":emitter}), n=nfft, axis=0)
-    # nfft_1: newly-padded length for fft; axis=0: process the time-domain samples along the first dimension; HRTF_1 = complex-valued frequency domain representation.
+    # nfft: newly-padded length for fft; axis=0: process the time-domain samples along the first dimension; HRTF = complex-valued frequency domain representation.
     
     # Calculate single-sided magnitude-spectrum
     HRTF_mag = (2/nfft)*np.abs(HRTF[0:int(len(HRTF)/2)+1])
-    # Takes the first half of the FFT (which is positive frequencies only), computes the magnitude using np.abs(), and scales by 2/nfft_1 to account for doubled energy in positive frequencies, and to normalize for FFT length. +1 to include both 0Hz (DC) and Nyquist/sampling frequency.
+    # Takes the first half of the FFT (which is positive frequencies only), computes the magnitude using np.abs(), and scales by 2/nfft to account for doubled energy in positive frequencies, and to normalize for FFT length. +1 to include both 0Hz (DC) and Nyquist/sampling frequency.
     
     # Convert magnitude to decibels
     HRTF_mag_dB = 20*np.log10(HRTF_mag)
@@ -67,11 +67,11 @@ for i in sofa_files_list:
     
     # Generate frequency axis
     f_axis = np.linspace(0, (SOFA_HRTF.Data.SamplingRate.get_values(indices={"M":measurement, "R":receiver, "E":emitter}))/2, len(HRTF_mag_dB))
-    # Bounds are from 0 (DC) - SamplingRate/2 (Nyquist frequency); length of the axis is equal to HRTF_mag_dB_1 so that there is 1 data point per possible grid point on the axis.
+    # Bounds are from 0 (DC) - SamplingRate/2 (Nyquist frequency); length of the axis is equal to HRTF_mag_dB so that there is 1 data point per possible grid point on the axis.
     
     # Plots the frequency response
     plt.semilogx(f_axis, HRTF_mag_dB)
-    # x-axis = f_axis (frequency); y-axis = HRTF_mag_dB_1 (decibels). 
+    # x-axis = f_axis (frequency); y-axis = HRTF_mag_dB (decibels). 
     
     SOFA_HRTF.close()
 
